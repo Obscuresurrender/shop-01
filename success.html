@@ -170,18 +170,25 @@
         </div>
     </div>
 
+    <script src="js/site.js"></script>
     <script>
         // 抓取網址參數
         const params = new URLSearchParams(window.location.search);
         const type = params.get('type');
         const name = params.get('name') || '薛翔謙';
+        const orderId = params.get('orderId');
 
         const titleEl = document.getElementById('display-title');
         const welcomeEl = document.getElementById('display-welcome');
         const actionLink = document.getElementById('action-link');
 
         // 根據來源變更顯示內容
-        if (type === 'login') {
+        if (type === 'checkout' && orderId) {
+            titleEl.innerText = '交易成功';
+            welcomeEl.innerHTML = `訂單編號：<strong>${orderId}</strong> 已完成付款`;
+            actionLink.innerHTML = `<i class="fa-solid fa-list-check"></i> 查看訂單列表`;
+            actionLink.href = 'order.html';
+        } else if (type === 'login') {
             titleEl.innerText = "會員登入成功";
             welcomeEl.innerHTML = `歡迎 <span style="color:#006241;">${name}</span> 回來`;
             actionLink.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> 前往購物車`;

@@ -44,8 +44,11 @@
         .menu-button { padding: 0.75rem 1rem; font-size: 0.95rem; border-radius: 25px; flex: 1; text-align: center; transition: all 0.3s ease; cursor: pointer; border: 1px solid transparent; font-weight: bold; }
         .menu-button.buy { background-color: #8B4513; color: white; }
         .menu-button.buy:hover { background-color: #5C2E0F; transform: translateY(-2px); }
+        .menu-button.disabled { opacity: 0.55; cursor: not-allowed; }
         .menu-button.learn-more { background-color: white; color: #8B4513; border-color: #8B4513; text-decoration: none; }
         .menu-button.learn-more:hover { background-color: #FFF8DC; transform: translateY(-2px); }
+        .menu-item-stock { margin-top: 0.75rem; color: #6F4E37; font-size: 0.95rem; font-weight: 600; }
+        .cart-badge { display: none; margin-left: 6px; min-width: 24px; font-size: 0.8rem; padding: 2px 8px; border-radius: 999px; background: #8B4513; color: white; font-weight: 700; }
 
         /* Footer Styles */
         .footer { background: linear-gradient(135deg, #4A3623 0%, #3C2A1E 100%); padding: 4rem 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; position: relative; overflow: hidden; border-top: none; }
@@ -88,7 +91,8 @@
                 <li><a href="#whiskey"><i class="fa-solid fa-tumbler"></i> 威士忌</a></li>
                 <li><a href="#rum"><i class="fa-solid fa-flask"></i> 朗姆酒</a></li>
                 <li><a href="leaderboard.html"><i class="fa-solid fa-crown"></i> 排行榜</a></li>
-                <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> 購物車</a></li>
+                <li><a href="order.html"><i class="fa-solid fa-list-check"></i> 訂單查閱</a></li>
+                <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> 購物車 <span data-cart-count class="cart-badge">0</span></a></li>
                 <li><a href="index1.html"><i class="fa-solid fa-cart-shopping"></i> 會員資料</a></li>
                 <li><a href="index2.html"><i class="fa-solid fa-cart-shopping"></i> 商品資訊</a></li>
                 <li id="nav-login"><a href="login.html"><i class="fa-solid fa-user"></i> 登入/註冊</a></li>
@@ -106,10 +110,10 @@
         <h2 class="menu-title">🥃 優質伏特加</h2>
         <p class="menu-subtitle">Premium Vodka Selection</p>
         <div class="menu-grid">
-            <div class="menu-item"><div class="menu-item-image"><img src="image/drink1.jpg" alt="俄羅斯經典伏特加"></div><div class="menu-item-name">俄羅斯經典伏特加</div><div class="menu-item-price">NT$ 1,200</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka01')">加入購物車</button><a href="product.html?id=vodka01" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/drink2.jpg" alt="波蘭高級伏特加"></div><div class="menu-item-name">波蘭高級伏特加</div><div class="menu-item-price">NT$ 950</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka02')">加入購物車</button><a href="product.html?id=vodka02" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/drink3.jpg" alt="瑞典冰晶伏特加"></div><div class="menu-item-name">瑞典冰晶伏特加</div><div class="menu-item-price">NT$ 1,400</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka03')">加入購物車</button><a href="product.html?id=vodka03" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/drink4.jpg" alt="美國頂級伏特加"></div><div class="menu-item-name">美國頂級伏特加</div><div class="menu-item-price">NT$ 1,100</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka04')">加入購物車</button><a href="product.html?id=vodka04" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="vodka01"><div class="menu-item-image"><img src="image/drink1.jpg" alt="俄羅斯經典伏特加"></div><div class="menu-item-name">俄羅斯經典伏特加</div><div class="menu-item-price">NT$ 1,200</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka01')">加入購物車</button><a href="product.html?id=vodka01" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="vodka02"><div class="menu-item-image"><img src="image/drink2.jpg" alt="波蘭高級伏特加"></div><div class="menu-item-name">波蘭高級伏特加</div><div class="menu-item-price">NT$ 950</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka02')">加入購物車</button><a href="product.html?id=vodka02" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="vodka03"><div class="menu-item-image"><img src="image/drink3.jpg" alt="瑞典冰晶伏特加"></div><div class="menu-item-name">瑞典冰晶伏特加</div><div class="menu-item-price">NT$ 1,400</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka03')">加入購物車</button><a href="product.html?id=vodka03" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="vodka04"><div class="menu-item-image"><img src="image/drink4.jpg" alt="美國頂級伏特加"></div><div class="menu-item-name">美國頂級伏特加</div><div class="menu-item-price">NT$ 1,100</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('vodka04')">加入購物車</button><a href="product.html?id=vodka04" class="menu-button learn-more">詳細</a></div></div>
         </div>
     </section>
 
@@ -117,10 +121,10 @@
         <h2 class="menu-title" style="border-color: #D4A574;">🥃 精選威士忌</h2>
         <p class="menu-subtitle">Premium Whiskey Collection</p>
         <div class="menu-grid">
-            <div class="menu-item"><div class="menu-item-image"><img src="image/cake1.jpg" alt="蘇格蘭單一麥芽威士忌"></div><div class="menu-item-name">蘇格蘭單一麥芽威士忌</div><div class="menu-item-price">NT$ 2,500</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey01')">加入購物車</button><a href="product.html?id=whiskey01" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/cake2.JPG" alt="愛爾蘭威士忌"></div><div class="menu-item-name">愛爾蘭威士忌</div><div class="menu-item-price">NT$ 1,800</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey02')">加入購物車</button><a href="product.html?id=whiskey02" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/cake3.jpg" alt="美國波本威士忌"></div><div class="menu-item-name">美國波本威士忌</div><div class="menu-item-price">NT$ 2,000</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey03')">加入購物車</button><a href="product.html?id=whiskey03" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/cake4.jpg" alt="日本頂級威士忌"></div><div class="menu-item-name">日本頂級威士忌</div><div class="menu-item-price">NT$ 3,200</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey04')">加入購物車</button><a href="product.html?id=whiskey04" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="whiskey01"><div class="menu-item-image"><img src="image/cake1.jpg" alt="蘇格蘭單一麥芽威士忌"></div><div class="menu-item-name">蘇格蘭單一麥芽威士忌</div><div class="menu-item-price">NT$ 2,500</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey01')">加入購物車</button><a href="product.html?id=whiskey01" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="whiskey02"><div class="menu-item-image"><img src="image/cake2.JPG" alt="愛爾蘭威士忌"></div><div class="menu-item-name">愛爾蘭威士忌</div><div class="menu-item-price">NT$ 1,800</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey02')">加入購物車</button><a href="product.html?id=whiskey02" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="whiskey03"><div class="menu-item-image"><img src="image/cake3.jpg" alt="美國波本威士忌"></div><div class="menu-item-name">美國波本威士忌</div><div class="menu-item-price">NT$ 2,000</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey03')">加入購物車</button><a href="product.html?id=whiskey03" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="whiskey04"><div class="menu-item-image"><img src="image/cake4.jpg" alt="日本頂級威士忌"></div><div class="menu-item-name">日本頂級威士忌</div><div class="menu-item-price">NT$ 3,200</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('whiskey04')">加入購物車</button><a href="product.html?id=whiskey04" class="menu-button learn-more">詳細</a></div></div>
         </div>
     </section>
 
@@ -128,10 +132,10 @@
         <h2 class="menu-title" style="border-color: #A0826D;">🥃 頂級朗姆酒</h2>
         <p class="menu-subtitle">Premium Rum Varieties</p>
         <div class="menu-grid">
-            <div class="menu-item"><div class="menu-item-image"><img src="image/bread1.JPG" alt="古巴黑朗姆酒"></div><div class="menu-item-name">古巴黑朗姆酒</div><div class="menu-item-price">NT$ 850</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum01')">加入購物車</button><a href="product.html?id=rum01" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/bread2.JPG" alt="牙買加金朗姆酒"></div><div class="menu-item-name">牙買加金朗姆酒</div><div class="menu-item-price">NT$ 920</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum02')">加入購物車</button><a href="product.html?id=rum02" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/bread3.JPG" alt="巴西白朗姆酒"></div><div class="menu-item-name">巴西白朗姆酒</div><div class="menu-item-price">NT$ 750</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum03')">加入購物車</button><a href="product.html?id=rum03" class="menu-button learn-more">詳細</a></div></div>
-            <div class="menu-item"><div class="menu-item-image"><img src="image/bread4.jpg" alt="委內瑞拉頂級朗姆"></div><div class="menu-item-name">委內瑞拉頂級朗姆</div><div class="menu-item-price">NT$ 1,500</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum04')">加入購物車</button><a href="product.html?id=rum04" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="rum01"><div class="menu-item-image"><img src="image/bread1.JPG" alt="古巴黑朗姆酒"></div><div class="menu-item-name">古巴黑朗姆酒</div><div class="menu-item-price">NT$ 850</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum01')">加入購物車</button><a href="product.html?id=rum01" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="rum02"><div class="menu-item-image"><img src="image/bread2.JPG" alt="牙買加金朗姆酒"></div><div class="menu-item-name">牙買加金朗姆酒</div><div class="menu-item-price">NT$ 920</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum02')">加入購物車</button><a href="product.html?id=rum02" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="rum03"><div class="menu-item-image"><img src="image/bread3.JPG" alt="巴西白朗姆酒"></div><div class="menu-item-name">巴西白朗姆酒</div><div class="menu-item-price">NT$ 750</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum03')">加入購物車</button><a href="product.html?id=rum03" class="menu-button learn-more">詳細</a></div></div>
+            <div class="menu-item" data-product-id="rum04"><div class="menu-item-image"><img src="image/bread4.jpg" alt="委內瑞拉頂級朗姆"></div><div class="menu-item-name">委內瑞拉頂級朗姆</div><div class="menu-item-price">NT$ 1,500</div><div class="menu-item-stock">庫存：--</div><div class="menu-item-actions"><button class="menu-button buy" onclick="addToCart('rum04')">加入購物車</button><a href="product.html?id=rum04" class="menu-button learn-more">詳細</a></div></div>
         </div>
     </section>
 
@@ -246,6 +250,27 @@
         document.querySelectorAll('.menu-item').forEach((card, index) => setTimeout(() => observer.observe(card), index * 50));
         
         document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+    <script src="js/site.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.menu-item[data-product-id]').forEach((item) => {
+                const productId = item.dataset.productId;
+                const product = getProduct(productId);
+                const label = item.querySelector('.menu-item-stock');
+                const button = item.querySelector('.menu-button.buy');
+
+                if (product) {
+                    label.innerText = product.stock > 0 ? `庫存：${product.stock} 份` : '已售完';
+                    if (product.stock <= 0) {
+                        button.disabled = true;
+                        button.classList.add('disabled');
+                        button.innerText = '售完';
+                    }
+                }
+            });
+            renderCartBadge();
+        });
     </script>
 </body>
 </html>

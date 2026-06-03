@@ -18,6 +18,7 @@
         .navbar-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
         .navbar-menu a { text-decoration: none; color: #8B4513; font-weight: 500; transition: color 0.3s ease; font-size: 0.95rem; }
         .navbar-menu a:hover { color: #A0522D; }
+        .cart-badge { display: none; margin-left: 6px; min-width: 24px; font-size: 0.8rem; padding: 2px 8px; border-radius: 999px; background: #8B4513; color: white; font-weight: 700; }
 
         .product-page-wrapper { flex: 1; padding: 4rem 2rem; display: flex; justify-content: center; align-items: center; }
         .product-detail-container { 
@@ -35,7 +36,8 @@
         .badge { display: inline-block; background: #D4A574; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; }
         .pd-title { font-size: 2.5rem; color: #8B4513; font-weight: 700; margin-bottom: 15px; }
         .pd-desc { font-size: 1rem; color: #666; line-height: 1.8; margin-bottom: 25px; }
-        .pd-price { font-size: 2.2rem; font-weight: 700; color: #8B4513; margin-bottom: 25px; }
+        .pd-price { font-size: 2.2rem; font-weight: 700; color: #8B4513; margin-bottom: 10px; }
+        .pd-stock { color: #6F4E37; font-weight: 600; margin-bottom: 25px; }
         
         .option-group { margin-bottom: 20px; }
         .option-title { font-weight: 600; color: #8B4513; margin-bottom: 10px; font-size: 1.1rem; }
@@ -88,7 +90,8 @@
                 <li><a href="index.html#whiskey"><i class="fa-solid fa-tumbler"></i> 威士忌</a></li>
                 <li><a href="index.html#rum"><i class="fa-solid fa-flask"></i> 朗姆酒</a></li>
                 <li><a href="leaderboard.html"><i class="fa-solid fa-crown"></i> 排行榜</a></li>
-                <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> 購物車</a></li>
+                <li><a href="order.html"><i class="fa-solid fa-list-check"></i> 訂單查閱</a></li>
+                <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i> 購物車 <span data-cart-count class="cart-badge">0</span></a></li>
                 <li id="nav-login"><a href="login.html"><i class="fa-solid fa-user"></i> 登入/註冊</a></li>
                 <li id="nav-user" style="display:none;"><a href="#" id="user-display" style="color:#8B4513; font-weight:bold;"></a></li>
                 <li id="nav-logout" style="display:none;"><a href="#" id="btn-logout" style="color:#e74c3c;">登出</a></li>
@@ -179,6 +182,7 @@
         </div>
     </footer>
 
+    <script src="js/site.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -227,29 +231,57 @@
             qtyInput.value = currentQty;
         }
 
-        const productsDB = {
-            "tea01": { name: "水之森玄米抹茶", price: 65, img: "image/drink1.jpg", desc: "嚴選靜岡抹茶搭配焙煎玄米，茶湯翠綠，帶有濃郁的米香與抹茶回甘。" },
-            "tea02": { name: "英倫伯爵紅茶", price: 55, img: "image/drink2.jpg", desc: "特選錫蘭紅茶為基底，佐以佛手柑香氣，茶感醇厚，散發迷人優雅的英倫風情。" },
-            "tea03": { name: "珍珠鮮奶", price: 75, img: "image/drink3.jpg", desc: "Q彈手作珍珠搭配綠光牧場直送鮮乳，濃郁奶香與黑糖香氣完美融合。" },
-            "tea04": { name: "手炒黑糖鮮奶", price: 80, img: "image/drink1.jpg", desc: "職人每日手工慢炒黑糖，淋上醇厚鮮奶，甜而不膩，帶有獨特焦糖香。" },
-            
-            "cake01": { name: "草莓鮮奶油蛋糕", price: 120, img: "image/cake1.jpg", desc: "綿密海綿蛋糕搭配新鮮草莓與特調鮮奶油，甜而不膩的夢幻滋味。" },
-            "cake02": { name: "芒果夏洛特", price: 130, img: "image/cake2.jpg", desc: "外圍酥脆手指餅乾，包裹著香濃芒果慕斯與新鮮芒果果肉，夏日限定。" },
-            "cake03": { name: "經典黑森林", price: 110, img: "image/cake1.jpg", desc: "濃郁巧克力蛋糕體加上酒漬櫻桃，鋪滿巧克力碎片，經典德式風味。" },
-            "cake04": { name: "法式檸檬塔", price: 100, img: "image/cake2.jpg", desc: "酥脆塔皮搭配酸甜平衡的法式檸檬奶油餡，清新解膩的好選擇。" },
-
-            "bread01": { name: "法式經典長棍", price: 65, img: "image/bread1.jpg", desc: "外皮酥脆內裡充滿麥香，適合單吃或搭配濃湯的經典法國麵包。" },
-            "bread02": { name: "綜合雜糧麵包", price: 80, img: "image/bread2.jpg", desc: "富含多種穀物與堅果，口感紮實有嚼勁，健康滿分的美味選擇。" },
-            "bread03": { name: "奶油海鹽羅宋", price: 70, img: "image/bread3.jpg", desc: "濃郁奶油香氣與微鹹海鹽的完美結合，層層分明的酥脆口感。" },
-            "bread04": { name: "香蒜帕瑪森", price: 75, img: "image/bread1.jpg", desc: "塗滿特製香蒜奶油與帕瑪森起司，烤至金黃酥脆，香氣四溢。" }
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
+            const pd = getProduct(productId);
 
-            if(productId && productsDB[productId]) {
-                const pd = productsDB[productId];
+            if (productId && pd) {
+                document.title = `${pd.name} - 上品基酒`;
+                document.getElementById('pd-image').src = pd.img;
+                document.getElementById('pd-name').innerText = pd.name;
+                document.getElementById('pd-desc').innerText = pd.desc;
+                document.getElementById('pd-price').innerText = `NT$ ${pd.price}`;
+                const stockEl = document.createElement('div');
+                stockEl.className = 'pd-stock';
+                stockEl.innerText = pd.stock > 0 ? `庫存：${pd.stock} 份` : '已售完';
+                document.querySelector('.info-section').insertBefore(stockEl, document.getElementById('add-to-cart-btn'));
+
+                if (pd.stock <= 0) {
+                    const btn = document.getElementById('add-to-cart-btn');
+                    btn.disabled = true;
+                    btn.innerText = '商品已售完';
+                    btn.style.opacity = '0.65';
+                    btn.style.cursor = 'not-allowed';
+                }
+
+                if (!productId.startsWith('tea')) {
+                    document.getElementById('sugar-group').style.display = 'none';
+                    document.getElementById('ice-group').style.display = 'none';
+                    document.getElementById('pd-badge').innerText = '精緻蛋糕 / 手工麵包';
+                    document.getElementById('pd-badge').style.background = '#2ECC71';
+                }
+
+                document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                    const qty = parseInt(document.getElementById('pd-qty').value);
+                    let sugar = '--';
+                    let ice = '--';
+                    if (productId.startsWith('tea')) {
+                        sugar = document.querySelector('#sugar-options .active').innerText;
+                        ice = document.querySelector('#ice-options .active').innerText;
+                    }
+                    const added = addToCart(productId, { qty, sugar, ice });
+                    if (added) {
+                        let alertText = productId.startsWith('tea') ? `(${sugar}/${ice}) ` : '';
+                        alert(`【${pd.name}】${alertText}x ${qty} 已加入購物車！`);
+                        window.location.href = 'cart.html';
+                    }
+                });
+            } else {
+                alert('找不到該商品！將返回首頁。');
+                window.location.href = 'index.html';
+            }
+        });
                 document.title = `${pd.name} - 星巴克 Starbucks`;
                 document.getElementById('pd-image').src = pd.img;
                 document.getElementById('pd-name').innerText = pd.name;
